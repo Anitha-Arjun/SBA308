@@ -109,6 +109,16 @@ function getLearnerData(course, ag, submissions) {
   for (let i = 0; i < LearnerSubmissions.length; i++) {
     try {
       if (resultArr.length === 0) {
+        //Check if Learner Id & Assignment Id Exists
+        if (
+          !LearnerSubmissions[i].learner_id ||
+          !LearnerSubmissions[i].assignment_id
+        ) {
+          console.warn(
+            `Skipping invalid entry at index ${i}: Missing learner_id or assignment_id.`
+          );
+          continue; // Skip this iteration if data is incomplete
+        }
         obj["id"] = LearnerSubmissions[i].learner_id;
         //Get Assignment Object from Learners submission id
         let assignment = getAssignmentInfo(
